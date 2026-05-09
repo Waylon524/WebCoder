@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp
+.playwright-mcp/
+
+# Local environment files
+.env
+.env.*

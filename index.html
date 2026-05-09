@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebCoder</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M9 11h14v3H9zm0 6h9v3H9z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="project-sidebar" aria-label="网站项目">
+        <div class="brand">
+          <img src="assets/webcoder-mark.svg" alt="" class="brand-mark">
+          <div>
+            <h1>WebCoder</h1>
+            <p id="workspaceLabel">未连接文件夹</p>
+          </div>
+        </div>
+
+        <div class="primary-actions">
+          <button class="button primary" id="connectFolderButton" type="button">连接文件夹</button>
+          <button class="button" id="settingsButton" type="button">设置</button>
+        </div>
+
+        <div class="project-actions">
+          <button class="icon-button" id="newProjectButton" type="button" title="新建网站" aria-label="新建网站">+</button>
+          <label class="icon-button" title="导入 HTML" aria-label="导入 HTML">
+            <input id="htmlImportInput" type="file" accept=".html,.htm,text/html">
+            <span aria-hidden="true">↥</span>
+          </label>
+          <button class="icon-button" id="renameProjectButton" type="button" title="重命名" aria-label="重命名">✎</button>
+          <button class="icon-button danger" id="deleteProjectButton" type="button" title="删除" aria-label="删除">×</button>
+        </div>
+
+        <div class="section-title">网站项目</div>
+        <nav class="project-list" id="projectList" aria-label="网站项目列表"></nav>
+      </aside>
+
+      <main class="preview-workspace">
+        <header class="preview-toolbar">
+          <div>
+            <p>实时预览</p>
+            <h2 id="projectTitle">请选择或连接网站项目</h2>
+          </div>
+          <div class="toolbar-actions">
+            <div class="segmented" aria-label="预览尺寸">
+              <button class="segment active" id="desktopPreviewButton" type="button">桌面</button>
+              <button class="segment" id="mobilePreviewButton" type="button">手机</button>
+            </div>
+            <button class="button" id="refreshPreviewButton" type="button">刷新</button>
+            <button class="button" id="saveButton" type="button">保存</button>
+            <button class="button" id="exportButton" type="button">导出</button>
+            <button class="button" id="undoButton" type="button">撤销</button>
+          </div>
+        </header>
+
+        <section class="preview-stage" aria-label="网站预览">
+          <div class="empty-state" id="emptyState">
+            <h2>连接一个本地文件夹开始</h2>
+            <p>WebCoder 会把所选文件夹下每个包含 index.html 的一级子文件夹识别为网站项目。</p>
+            <button class="button primary" id="emptyConnectButton" type="button">连接文件夹</button>
+          </div>
+          <iframe id="previewFrame" title="网站预览" sandbox="allow-scripts allow-forms allow-popups"></iframe>
+        </section>
+      </main>
+
+      <aside class="ai-panel" aria-label="AI 助手">
+        <div class="ai-header">
+          <div>
+            <p>AI 助手</p>
+            <h2>对话修改网站</h2>
+          </div>
+          <span class="status" id="statusText">待连接</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <form class="composer" id="chatForm">
+          <label for="promptInput">输入你想怎么修改这个网站</label>
+          <textarea id="promptInput" rows="4" placeholder="例如：把首页改成更高级的作品集页面，并让按钮更醒目。"></textarea>
+          <button class="button primary" id="sendButton" type="submit">发送</button>
+        </form>
+      </aside>
+    </div>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form method="dialog">
+        <div class="dialog-header">
+          <h2>设置</h2>
+          <button class="icon-button" value="cancel" title="关闭" aria-label="关闭">×</button>
+        </div>
+        <label>
+          <span>界面语言</span>
+          <select id="languageInput">
+            <option value="zh-CN">中文</option>
+            <option value="en-US">English</option>
+          </select>
+        </label>
+        <label>
+          <span>OpenAI 兼容 base URL</span>
+          <input id="baseUrlInput" type="url" autocomplete="off" placeholder="https://api.openai.com/v1">
+        </label>
+        <label>
+          <span>模型</span>
+          <input id="modelInput" type="text" autocomplete="off" placeholder="gpt-4.1-mini">
+        </label>
+        <label>
+          <span>API Key</span>
+          <input id="apiKeyInput" type="password" autocomplete="off">
+        </label>
+        <menu>
+          <button class="button" value="cancel">取消</button>
+          <button class="button primary" id="saveSettingsButton" value="default">保存设置</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <div class="unsupported" id="unsupportedBanner" hidden>
+      <strong>需要 Chrome 或 Edge</strong>
+      <span>这个版本依赖真实文件夹读写能力，请使用支持 File System Access API 的浏览器打开。</span>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
